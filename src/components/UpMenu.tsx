@@ -202,9 +202,9 @@ function UpMenu(props: any) {
           />
           <h1
             style={{ color: headingColor }}
-            className="p-5 text-center font-sans text-sm md:text-4xl font-extrabold"
+            className="p-5 text-center font-sans text-xs md:text-4xl font-extrabold"
           >
-           Facebook Reels Downloader+
+           Facebook Thumbnail Downloader+
           </h1>
         </div>
 

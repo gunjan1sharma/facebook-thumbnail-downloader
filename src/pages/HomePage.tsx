@@ -11,6 +11,7 @@ import React, { ChangeEventHandler, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { Root } from "../extras/types";
+import Thumbnail from "../components/Thumbnails";
 
 const API_BASE_URL = `http://192.168.1.88:5001/extras/v1/api/youtube/facebook-video-download?videoUrl=`;
 var static_video_url = "";
@@ -156,8 +157,7 @@ function HomePage(props: any) {
 
     if (
       videoUrl === "" ||
-      (!videoUrl.includes("facebook") &&
-      !videoUrl.includes("fb"))
+      (!videoUrl.includes("facebook") && !videoUrl.includes("fb"))
     ) {
       alert("A Valid Facebook Video URL is Required!!");
       return;
@@ -217,7 +217,7 @@ function HomePage(props: any) {
 
   const backdrop = (
     <React.Fragment>
-      <Backdrop 
+      <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
         onClick={handleClose}
@@ -249,7 +249,7 @@ function HomePage(props: any) {
           sx={{ marginTop: "20px", marginBottom: "10px", width: "200px" }}
           variant="contained"
         >
-          Download Video
+          Fetch Thumbnail
         </Button>
         <Button
           onClick={handleVideoPlay}
@@ -259,8 +259,8 @@ function HomePage(props: any) {
           Play Video
         </Button>
         <h3 className="text-xs text-center w-80 m-2">
-          A direct prompt to download video will get triggered if video has only
-          one format else a list of downloadable video will get presented.
+          A direct prompt to download thumbnails will get triggered if video has
+          only one format else a list of downloadable video will get presented.
         </h3>
         <div className="flex items-center justify-center">
           <Checkbox
@@ -268,8 +268,8 @@ function HomePage(props: any) {
             defaultChecked
           />
           <h3 className="text-xs text-center m-2">
-            By downloading video you agree to our terms & conditions for fair
-            usages policy
+            By downloading thumbnail you agree to our terms & conditions for
+            fair usages policy
           </h3>
         </div>
         <Divider color="black" />
@@ -280,7 +280,7 @@ function HomePage(props: any) {
       {isDownloadSuccess && (
         <div className="border-2 text-center border-blue-500 shadow-sm p-4">
           <div className="flex flex-col items-center md:flex-row font-mono mb-5 justify-center">
-            <h3 className="font-bold text-xl">Video Fetching Successful</h3>
+            <h3 className="font-bold text-xl">Thumbnail Fetching Successful</h3>
             <img
               className="m-2"
               width="30px"
@@ -296,19 +296,6 @@ function HomePage(props: any) {
               src={DownloadImage}
             />
           </div>
-
-          {audioResponse.info.data.map((format, index) => {
-            return (
-              <Button
-                sx={{ margin: "10px", color: "blue", fontWeight: "bold" }}
-                key={index}
-                variant="outlined"
-                onClick={() => openLink(format.url)}
-              >
-                Download Video [{format.resolution}]
-              </Button>
-            );
-          })}
         </div>
       )}
 
@@ -324,6 +311,19 @@ function HomePage(props: any) {
           />
         </div>
       )}
+
+      {isDownloadSuccess &&
+        audioResponse.info.data.map((singleVideo) => {
+          return (
+            <Thumbnail
+              key={singleVideo.url}
+              resolution={singleVideo.resolution}
+              thumbnail={singleVideo.thumbnail}
+              url={singleVideo.url}
+              shouldRender={false}
+            />
+          );
+        })}
     </div>
   );
 }
