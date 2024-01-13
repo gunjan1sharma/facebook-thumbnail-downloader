@@ -47,6 +47,13 @@ export interface Root {
   info: Info;
 }
 
+export interface SimpleIntroProps {
+  tag?: string;
+  heading: string;
+  subtitle: string;
+  btntext: string;
+}
+
 export interface Info {
   developer: string;
   status: boolean;
